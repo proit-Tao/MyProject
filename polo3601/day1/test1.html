@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>我是一个test</title>
+		<style>
+			* {
+				margin: 0px;
+				padding: 0px;
+			}
+			
+			#box1 {
+				height: 100px;
+				width: 100px;
+				background-color: yellow;
+				position: absolute;
+				left: 0px;
+				
+			}
+			
+			#box2 {
+				height: 100px;
+				width: 100px;
+				background-color: red;
+				top: 200px;
+				position: absolute;
+			}
+		</style>
+		<script type="text/javascript">
+			window.onload = function() {
+				function getStyle(obj, nameOfStyle) {
+					if(window.getComputedStyle) {
+						return getComputedStyle(obj, null)[nameOfStyle];
+					} else {
+						return obj.currentStyle[name];
+					};
+				};
+				function move(obj,matter,target,speed,callback){
+					var currentValue = parseInt(getStyle(box1,matter));
+					alert(obj);
+					if(currentValue>target){
+						speed = -speed;
+					};
+					clearInterval(obj.timer);
+					obj.timer = setInterval(function() {
+						var oldValue = parseInt(getStyle(box1, matter));
+						console.log(oldValue);
+						var newValue = oldValue + speed;
+						if(speed<0&&newValue<target||speed>0&&newValue>target){
+							newValue = target;
+						};
+						obj.style[matter] = newValue + "px";
+						if(newValue == target) {
+							clearInterval(obj.timer);
+							callback&&callback();
+						}
+					}, 30);
+				};
+				var btn01 = document.getElementById("btn01");
+				var btn02 = document.getElementById("btn02");
+				var box1 = document.getElementById("box1");
+				
+				btn01.onclick = function(){
+					move(box1,"left",0,10);
+				};
+				btn02.onclick = function(){
+					move(box1,"left",800,10);
+				};
+
+			};
+		</script>
+	</head>
+
+	<body>
+		<button id="btn01">box1向左移动</button>
+		<button id="btn02">box1向右移动</button>
+		<br /><br />
+		<!--<div id="box1"></div>
+		<div id="box2"></div>-->
+		<p>11</p>
+		<p>11</p>
+	</body>
+
+</html>
